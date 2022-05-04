@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            p {
+    border: 1px solid;
+    margin: 15px 0px;
+    padding:15px 20px 15px 55px;
+    width: 500px;	
+    font: bold 12px verdana;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 5px#888;
+    box-shadow: 0 0 5px #888;
+    text-shadow: 2px 2px 2px #ccc;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    text-align: center;
+ 
+}
+p {
+    color: #00529B;
+    text-align: center;
+      background: #BDE5F8 url('http://mydomain.com/images/icon-info.png') no-repeat 10px center;
+}
+      </style>
+
+    </head>
+<body>
+<centre>
+<h2 >Asking OpenAI</h2>
+<div id="new" >
+<input type="text" placeholder="Type something..." id="myInput">
+<button type="button" onclick="getInputValue();">Get Value</button>
+
+</div>
+</centre>
+<script>
+async function getInputValue(){
+            // Selecting the input element and get its value 
+            var inputVal = document.getElementById("myInput").value;
+            
+            // Displaying the value
+            let k =await getLocation(inputVal);
+
+            var tag = document.createElement("p");
+            var text = document.createTextNode("question>>>>   "+inputVal);
+            tag.appendChild(text);
+            var element = document.getElementById("new");
+            element.appendChild(tag);
+            var tag = document.createElement("p");
+            var text = document.createTextNode("answer>>>>     "+k["choices"][0]["text"]);
+            tag.appendChild(text);
+            var element = document.getElementById("new");
+            element.appendChild(tag);
+           
+        }
+  
+async function getLocation(p) {
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer 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");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({"prompt":p,"temperature":0.6,"max_tokens":1500,"top_p":1,"frequency_penalty":1,"presence_penalty":1});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+const result = await fetch("https://api.openai.com/v1/engines/ada/completions", requestOptions)
+  
+  return result.json();
+  //showPosition(result.json()["choices"][0]["text"])
+}
+
+
+</script>
+
+</body>
+</html>
