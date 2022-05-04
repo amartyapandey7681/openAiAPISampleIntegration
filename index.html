@@ -60,6 +60,7 @@ async function getLocation(p) {
     var myHeaders = new Headers();
 myHeaders.append("Authorization", "Bearer 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");
 myHeaders.append("Content-Type", "application/json");
+//old api key dont get happy
 
 var raw = JSON.stringify({"prompt":p,"temperature":0.6,"max_tokens":1500,"top_p":1,"frequency_penalty":1,"presence_penalty":1});
 
